@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Game IDERRORS - Programming Challenge</title>
+    <link rel="stylesheet" href="ide-theme.css">
+</head>
+<body>
+    <div class="welcome-page">
+        <div class="welcome-container">
+            <!-- Terminal Section -->
+            <div class="welcome-terminal">
+                <div class="terminal-header">
+                    <div class="terminal-buttons">
+                        <div class="btn-close"></div>
+                        <div class="btn-minimize"></div>
+                        <div class="btn-maximize"></div>
+                    </div>
+                    <div class="terminal-title">English Programming Challenge Terminal</div>
+                </div>
+                
+                <div class="terminal-body">
+                    <div class="terminal-line">
+                        <span class="prompt">developer@english-ide:~$</span> 
+                        <span class="command">./start-programming-challenge.sh</span>
+                    </div>
+                    
+                    <div class="terminal-output">
+                        <div class="ascii-art">
+╔═══════════════════════════════════════╗
+║  ___ ____  _____ ____  ____   ___  ____  ____  ║
+║ |_ _|  _ \| ____|  _ \|  _ \ / _ \|  _ \/ ___| ║
+║  | || | | |  _| | |_) | |_) | | | | |_) \___ \ ║
+║  | || |_| | |___|  _ <|  _ <| |_| |  _ < ___) |║
+║ |___|____/|_____|_| \_\_| \_\\___/|_| \_\____/ ║
+║                                               ║
+║        Programming + English Challenge        ║
+╚═══════════════════════════════════════╝
+                        </div>
+                        
+                        <div class="game-info">
+                            <div class="info-section success">
+                                <span class="info-label">STATUS:</span> System Ready ✓
+                            </div>
+                            <div class="info-section">
+                                <span class="info-label">MODE:</span> Interactive Learning
+                            </div>
+                            <div class="info-section">
+                                <span class="info-label">TARGET:</span> Java + English Phrasal Verbs
+                            </div>
+                            <div class="info-section">
+                                <span class="info-label">DIFFICULTY:</span> Adaptive
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 20px; color: #4fc1ff;">
+                            > Initializing challenge environment...
+                        </div>
+                        <div style="margin-top: 8px; color: #dcdcaa;">
+                            > Ready to start your programming adventure!
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Game Info Panel -->
+            <div class="game-info-panel">
+                <div class="panel-header">
+                    <h1 class="game-logo">IDERRORS</h1>
+                    <div class="subtitle">Interactive Development Environment for English Refinement and Review of Syntax</div>
+                    <div class="tagline">Master English Phrasal Verbs Through Programming</div>
+                </div>
+                
+                <div class="panel-content">
+                    <div class="objective-section">
+                        <h3>🎯 Objective</h3>
+                        <p>Complete 5 programming exercises where you must choose the correct English phrasal verb to make the code compile and execute successfully. Each exercise teaches you how these verbs are used in real programming contexts.</p>
+                    </div>
+                    
+                    <div class="rules-section">
+                        <h3>📋 Game Rules</h3>
+                        <div class="rules-grid">
+                            <div class="rule-item">
+                                <div class="rule-icon">🎮</div>
+                                <div class="rule-content">
+                                    <strong>5 Questions</strong><br>
+                                    Complete all exercises to finish the challenge
+                                </div>
+                            </div>
+                            <div class="rule-item">
+                                <div class="rule-icon">⏱️</div>
+                                <div class="rule-content">
+                                    <strong>No Time Limit</strong><br>
+                                    Learn at your own pace
+                                </div>
+                            </div>
+                            <div class="rule-item">
+                                <div class="rule-icon">💡</div>
+                                <div class="rule-content">
+                                    <strong>Learning Focus</strong><br>
+                                    Each correct answer teaches you a new phrasal verb
+                                </div>
+                            </div>
+                            <div class="rule-item">
+                                <div class="rule-icon">🏆</div>
+                                <div class="rule-content">
+                                    <strong>Progress Tracking</strong><br>
+                                    See your improvement and earn achievements
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="features-section">
+                        <h3>✨ Features</h3>
+                        <div class="features-list">
+                            <div class="feature">📝 5 Progressive Challenges</div>
+                            <div class="feature">🎮 IDE-like Interface</div>
+                            <div class="feature">📚 Phrasal Verb Learning</div>
+                            <div class="feature">⌨️ Keyboard Shortcuts</div>
+                            <div class="feature">🎯 Real-time Feedback</div>
+                            <div class="feature">📊 Progress Tracking</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="start-button" onclick="startGame()">
+                        <span class="button-icon">▶️</span>
+                        Start Game
+                    </button>
+                    <button class="help-button" onclick="showGameHelp()">
+                        <span class="button-icon">❓</span>
+                        Instructions
+                    </button>
+                </div>
+
+                <div class="additional-info">
+                    <div class="system-info">
+                        <span class="system-label">Powered by:</span>
+                        <div class="tech-tags">
+                            <span class="tech-tag">HTML5</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">CSS3</span>
+                            <span class="tech-tag">LocalStorage</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Background Particle Effects -->
+            <div class="particles-container">
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /**
+         * Initialize welcome page mode
+         */
+        function initializeWelcomeMode() {
+            console.log('🎮 IDERRORS Welcome Page Loaded');
+            
+            // Add typing effect to terminal
+            setTimeout(addTypingEffect, 1000);
+            
+            // Add particle animations
+            animateParticles();
+            
+            // Setup button interactions
+            setupWelcomeButtons();
+        }
+
+        /**
+         * Add typing effect to terminal command
+         */
+        function addTypingEffect() {
+            const command = document.querySelector('.command');
+            if (command) {
+                const text = command.textContent;
+                command.textContent = '';
+                command.style.borderRight = '2px solid #4fc1ff';
+                command.style.animation = 'blink 1s infinite';
+                
+                let i = 0;
+                const typeInterval = setInterval(() => {
+                    command.textContent += text[i];
+                    i++;
+                    if (i >= text.length) {
+                        clearInterval(typeInterval);
+                        command.style.borderRight = 'none';
+                        command.style.animation = 'none';
+                    }
+                }, 100);
+            }
+        }
+
+        /**
+         * Animate background particles
+         */
+        function animateParticles() {
+            const particles = document.querySelectorAll('.particle');
+            particles.forEach((particle, index) => {
+                // Set random starting positions
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                
+                // Apply different animation delays
+                particle.style.animationDelay = (index * 0.5) + 's';
+                
+                // Random sizes
+                const size = Math.random() * 4 + 3;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+            });
+        }
+
+        /**
+         * Setup welcome page buttons
+         */
+        function setupWelcomeButtons() {
+            const startBtn = document.querySelector('.start-button');
+            const helpBtn = document.querySelector('.help-button');
+            
+            if (startBtn) {
+                startBtn.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px) scale(1.05)';
+                });
+                
+                startBtn.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            }
+            
+            if (helpBtn) {
+                helpBtn.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px)';
+                });
+                
+                helpBtn.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            }
+        }
+
+        /**
+         * Start the game
+         */
+        function startGame() {
+            // Add button loading state
+            const startBtn = document.querySelector('.start-button');
+            if (startBtn) {
+                startBtn.innerHTML = '<span class="button-icon">⏳</span>Loading Game...';
+                startBtn.disabled = true;
+            }
+            
+            // Reset game state for new game
+            const newGameState = {
+                score: 0,
+                answered: 0,
+                learned: [],
+                currentExercise: 0
+            };
+            localStorage.setItem('englishIDEGame', JSON.stringify(newGameState));
+            
+            // Show loading notification
+            console.log('Initializing IDERRORS game environment...');
+            
+            // Redirect after animation
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1500);
+        }
+
+        /**
+         * Show game help/instructions
+         */
+        function showGameHelp() {
+            const helpContent = `🎮 IDERRORS - GAME INSTRUCTIONS
+
+📖 OVERVIEW:
+IDERRORS is an educational game that combines programming challenges with English language learning. You'll solve Java compilation errors while learning technical phrasal verbs.
+
+🎯 OBJECTIVE:
+• Complete 5 programming challenges
+• Learn technical phrasal verbs in context
+• Score points for correct answers
+• Improve your programming English
+
+⌨️ KEYBOARD SHORTCUTS:
+• 1-4: Select answer options
+• Enter: Compile and run code  
+• Ctrl+Enter: Quick compile
+• R: Restart game
+• Esc: Exit game
+• Ctrl+H: Show help
+
+🏆 SCORING:
+• Correct answer: +20 points
+• Wrong answer: 0 points
+• Bonus for speed and accuracy
+
+📚 LEARNING TIPS:
+• Read the code context carefully
+• Think about the phrasal verb meaning
+• Consider how it relates to programming
+• Don't rush - understanding is key
+
+Ready to start your coding adventure?`;
+            
+            alert(helpContent);
+        }
+
+        /**
+         * Add CSS for blink animation
+         */
+        const blinkStyle = document.createElement('style');
+        blinkStyle.textContent = `
+            @keyframes blink {
+                0%, 50% { border-right-color: #4fc1ff; }
+                51%, 100% { border-right-color: transparent; }
+            }
+        `;
+        document.head.appendChild(blinkStyle);
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', initializeWelcomeMode);
+    </script>
+    <script src="common.js"></script>
+</body>
+</html>

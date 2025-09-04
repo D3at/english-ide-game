@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Game IDERRORS - Final Results</title>
+    <link rel="stylesheet" href="ide-theme.css">
+</head>
+<body>
+    <!-- Menu Bar -->
+    <div class="menu-bar">
+        <div class="menu-item">File</div>
+        <div class="menu-item">Edit</div>
+        <div class="menu-item">View</div>
+        <div class="menu-item">Run</div>
+        <div class="menu-item">Help</div>
+    </div>
+
+    <!-- Minimal Toolbar -->
+    <div class="toolbar">
+        <div class="tool-button" style="background: #555; cursor: not-allowed;" disabled>🏆 Results Mode</div>
+        <div class="tool-separator"></div>
+        <div class="score-info">
+            <span>Final Score: <span id="finalScore">0/5</span> | Accuracy: <span id="finalAccuracy">0%</span></span>
+        </div>
+    </div>
+
+    <!-- Full screen container for results -->
+    <div class="fullscreen-container" style="overflow-y: auto; padding: 20px 0; min-height: 100vh;">
+        <div class="results-container" 
+             id="resultsContainer"
+             style="max-width: 1000px; margin: 0 auto; position: relative;">
+             
+            <!-- Header with Final Score -->
+            <div class="header-section">
+                <div class="game-title">Programming Challenge + English</div>
+                <div class="completion-message">Challenge Completed!</div>
+                <div class="final-score" id="displayScore">0/5</div>
+                <div id="accuracyDisplay" style="font-size: 16px; color: #858585; margin-bottom: 12px;">
+                    Accuracy: 0% | Correct: 0 | Incorrect: 0
+                </div>
+                <div class="achievement-level" id="levelDisplay">Level Beginner</div>
+                
+                <div class="progress-bar-container">
+                    <div style="font-size: 12px; color: #858585; margin-bottom: 4px;">Overall Progress</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="finalProgressBar"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content Grid -->
+            <div class="main-content">
+                <!-- Statistics Panel -->
+                <div class="stats-panel">
+                    <div class="panel-title">
+                        📊 Performance Statistics
+                    </div>
+                    
+                    <div class="stat-grid">
+                        <div class="stat-box">
+                            <div class="stat-value correct" id="correctAnswers">0</div>
+                            <div class="stat-label">Correct Answers</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value incorrect" id="incorrectAnswers">0</div>
+                            <div class="stat-label">Incorrect Answers</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value total" id="totalQuestions">0</div>
+                            <div class="stat-label">Total Questions</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value accuracy" id="accuracyPercentage">0%</div>
+                            <div class="stat-label">Success Rate</div>
+                        </div>
+                    </div>
+
+                    <!-- Exercise Difficulty Breakdown -->
+                    <div id="difficultyBreakdown" style="background: #1e1e1e; padding: 12px; border-radius: 5px; border: 1px solid #3e3e42; margin-top: 16px;">
+                        <strong>Exercise Difficulty Levels:</strong><br>
+                        <div id="difficultyStats" style="margin-top: 8px; font-size: 12px; color: #858585;">
+                            <!-- Will be populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <div style="background: #1e1e1e; padding: 12px; border-radius: 5px; border: 1px solid #3e3e42; margin-top: 12px;">
+                        <strong>Programming Concepts Covered:</strong><br>
+                        <div id="conceptsCovered" style="margin-top: 8px; font-size: 12px; color: #858585;">
+                            <!-- Will be populated based on exercises played -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phrasal Verbs Learned -->
+                <div class="phrasal-verbs-panel">
+                    <div class="panel-title">
+                        📚 Phrasal Verbs Mastered
+                    </div>
+                    
+                    <div id="phrasalVerbsList">
+                        <!-- Content will be loaded by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Breakdown -->
+            <div class="detailed-breakdown">
+                <div class="panel-title">
+                    🔍 Detailed Performance Breakdown
+                </div>
+                
+                <div class="breakdown-item breakdown-correct">
+                    <div>
+                        <strong>Correct Answers:</strong> <span id="correctCount">0</span> questions
+                    </div>
+                    <div style="font-size: 14px; color: #4fc1ff;" id="correctPercentage">
+                        ✓ 0% of the challenge
+                    </div>
+                </div>
+                
+                <div class="breakdown-item breakdown-incorrect">
+                    <div>
+                        <strong>Incorrect Answers:</strong> <span id="incorrectCount">0</span> questions
+                    </div>
+                    <div style="font-size: 14px; color: #f48771;" id="incorrectPercentage">
+                        ✗ 0% of the challenge
+                    </div>
+                </div>
+
+                <div class="phrasal-highlight">
+                    <strong>💡 Performance Analysis:</strong>
+                    <span id="performanceAnalysis">Loading analysis...</span>
+                </div>
+            </div>
+
+            <!-- Exercises Played Breakdown -->
+            <div id="exercisesBreakdown" class="detailed-breakdown">
+                <div class="panel-title">
+                    📝 Exercises Completed
+                </div>
+                <div id="exercisesList">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Achievements Section -->
+            <div class="achievements-section">
+                <div class="panel-title" style="justify-content: center; margin-bottom: 20px;">
+                    🏆 Unlocked Achievements
+                </div>
+                
+                <div id="achievementsList">
+                    <!-- Achievements will be loaded by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-section">
+                <button class="action-button primary" onclick="newGame()">
+                    🎮 Play Again
+                </button>
+                <button class="action-button" onclick="printCertificate()">
+                    📄 Print Certificate
+                </button>
+                <button class="action-button" onclick="shareResults()">
+                    📤 Share Results
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Status Bar -->
+    <div class="status-bar success">
+        <span id="statusMessage">Java | Game Complete | Results Generated Successfully</span>
+        <span>Challenge Finished</span>
+    </div>
+
+    <!-- Load questions database -->
+    <script src="questions.js"></script>
+    
+    <script>
+        // Programming examples for phrasal verbs - Enhanced with more examples
+        const programmingExamples = {
+            "break out": [
+                "Use 'break' to exit loops when a condition is met",
+                "Breaking out of nested loops requires labeled breaks in Java",
+                "Break out of infinite loops using proper termination conditions"
+            ],
+            "set up": [
+                "Database connections must be set up before use", 
+                "Setting up the development environment is crucial",
+                "Configuration files need to be set up properly for production"
+            ],
+            "come up": [
+                "Exceptions come up during runtime execution",
+                "Memory issues often come up with large datasets",
+                "Edge cases come up during thorough testing"
+            ],
+            "skip over": [
+                "Use 'continue' to skip over unwanted iterations",
+                "Conditional logic helps skip over invalid data",
+                "Skip over null values when processing arrays"
+            ],
+            "clear out": [
+                "Clear out temporary files after processing",
+                "Memory leaks occur when you don't clear out references",
+                "Clear out caches periodically for optimal performance"
+            ],
+            "come through": [
+                "Network requests come through after authentication",
+                "Data synchronization comes through when connection is stable",
+                "API responses come through with proper timeout handling"
+            ],
+            "rule out": [
+                "Input validation rules out malicious data",
+                "Type checking helps rule out runtime errors",
+                "Unit tests rule out regression bugs"
+            ]
+        };
+
+        let gameState = {};
+
+        function loadGameResults() {
+            // Load game state from localStorage
+            const savedGame = localStorage.getItem('englishIDEGame');
+            if (!savedGame) {
+                // No game data found, redirect to start
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            gameState = JSON.parse(savedGame);
+            
+            // Ensure we have exerciseSet data
+            if (!gameState.exerciseSet) {
+                gameState.exerciseSet = GAME_EXERCISES.slice(0, 5); // fallback
+            }
+            
+            // Calculate statistics
+            const score = gameState.score || 0;
+            const answered = gameState.answered || 0;
+            const learned = gameState.learned || [];
+            const incorrect = answered - score;
+            const accuracy = answered > 0 ? Math.round((score / answered) * 100) : 0;
+            const totalQuestions = gameState.exerciseSet.length;
+            
+            // Determine level based on accuracy
+            let level = "Beginner";
+            if (accuracy >= 90) level = "Expert";
+            else if (accuracy >= 70) level = "Advanced";
+            else if (accuracy >= 50) level = "Intermediate";
+            
+            // Update header section
+            updateHeader(score, totalQuestions, incorrect, accuracy, level);
+            
+            // Update statistics panel
+            updateStatistics(score, answered, incorrect, accuracy, totalQuestions);
+            
+            // Update phrasal verbs section
+            updatePhrasalVerbs(learned);
+            
+            // Update detailed breakdown
+            updateBreakdown(score, answered, incorrect, accuracy, totalQuestions);
+            
+            // Update exercises breakdown
+            updateExercisesBreakdown();
+            
+            // Update achievements
+            updateAchievements(score, answered, learned, accuracy, totalQuestions);
+            
+            // Set container attributes for styling
+            const container = document.getElementById('resultsContainer');
+            container.setAttribute('data-score', score);
+            container.setAttribute('data-answered', answered);
+            container.setAttribute('data-accuracy', accuracy);
+            container.setAttribute('data-learned', learned.length);
+        }
+
+        function updateHeader(score, totalQuestions, incorrect, accuracy, level) {
+            document.getElementById('finalScore').textContent = `${score}/${totalQuestions}`;
+            document.getElementById('finalAccuracy').textContent = `${accuracy}%`;
+            document.getElementById('displayScore').textContent = `${score}/${totalQuestions}`;
+            document.getElementById('accuracyDisplay').textContent = 
+                `Accuracy: ${accuracy}% | Correct: ${score} | Incorrect: ${incorrect}`;
+            
+            const levelDisplay = document.getElementById('levelDisplay');
+            levelDisplay.textContent = `Level ${level}`;
+            levelDisplay.className = `achievement-level ${accuracy >= 70 ? 'excellent' : accuracy >= 50 ? 'good' : 'needs-improvement'}`;
+            
+            const scoreDisplay = document.getElementById('displayScore');
+            scoreDisplay.className = `final-score ${accuracy >= 70 ? 'excellent' : accuracy >= 50 ? 'good' : 'needs-improvement'}`;
+            
+            const progressBar = document.getElementById('finalProgressBar');
+            progressBar.style.width = `${accuracy}%`;
+            progressBar.setAttribute('data-width', `${accuracy}%`);
+        }
+
+        function updateStatistics(score, answered, incorrect, accuracy, totalQuestions) {
+            document.getElementById('correctAnswers').textContent = score;
+            document.getElementById('incorrectAnswers').textContent = incorrect;
+            document.getElementById('totalQuestions').textContent = totalQuestions;
+            
+            const accuracyElement = document.getElementById('accuracyPercentage');
+            accuracyElement.textContent = `${accuracy}%`;
+            accuracyElement.className = `stat-value accuracy ${accuracy >= 70 ? 'excellent' : accuracy >= 50 ? 'good' : 'needs-improvement'}`;
+            
+            // Update difficulty breakdown
+            const difficultyStats = {};
+            gameState.exerciseSet.forEach(exercise => {
+                difficultyStats[exercise.difficulty] = (difficultyStats[exercise.difficulty] || 0) + 1;
+            });
+            
+            let difficultyHTML = '';
+            Object.entries(difficultyStats).forEach(([difficulty, count]) => {
+                difficultyHTML += `• ${difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}: ${count} exercises<br>`;
+            });
+            document.getElementById('difficultyStats').innerHTML = difficultyHTML;
+            
+            // Update concepts covered
+            const concepts = gameState.exerciseSet.map(ex => ex.title).join('<br>• ');
+            document.getElementById('conceptsCovered').innerHTML = '• ' + concepts;
+        }
+
+        function updatePhrasalVerbs(learned) {
+            const container = document.getElementById('phrasalVerbsList');
+            
+            if (learned.length > 0) {
+                const phrasalListDiv = document.createElement('div');
+                phrasalListDiv.className = 'phrasal-list';
+                
+                learned.forEach(learnedPhrasal => {
+                    const parts = learnedPhrasal.split(': ');
+                    const context = parts[0];
+                    const phrasalData = parts[1];
+                    const phrasalParts = phrasalData.split(' = ');
+                    const verb = phrasalParts[0];
+                    const meaning = phrasalParts[1];
+                    
+                    // Get programming examples
+                    const examples = programmingExamples[verb] || ["This phrasal verb is commonly used in programming contexts."];
+                    const progExample = examples[Math.floor(Math.random() * examples.length)];
+                    
+                    const phrasalItem = document.createElement('div');
+                    phrasalItem.className = 'phrasal-item';
+                    phrasalItem.innerHTML = `
+                        <div class="phrasal-verb">${verb}</div>
+                        <div class="phrasal-meaning">= ${meaning}</div>
+                        <div class="programming-example">"${progExample}"</div>
+                        <div style="font-size: 10px; color: #4fc1ff; margin-top: 4px;">From: ${context}</div>
+                    `;
+                    
+                    phrasalListDiv.appendChild(phrasalItem);
+                });
+                
+                container.appendChild(phrasalListDiv);
+            } else {
+                container.innerHTML = `
+                    <div class="empty-phrasal-state">
+                        <div class="empty-icon">📖</div>
+                        <div class="empty-message">You haven't mastered any phrasal verbs yet.</div>
+                        <div class="empty-submessage">Try again to master phrasal verbs in programming!</div>
+                    </div>
+                `;
+            }
+        }
+
+        function updateBreakdown(score, answered, incorrect, accuracy, totalQuestions) {
+            document.getElementById('correctCount').textContent = score;
+            document.getElementById('correctPercentage').textContent = `✓ ${Math.round((score/totalQuestions)*100)}% of the challenge`;
+            document.getElementById('incorrectCount').textContent = incorrect;
+            document.getElementById('incorrectPercentage').textContent = `✗ ${Math.round((incorrect/totalQuestions)*100)}% of the challenge`;
+            
+            // Performance analysis based on accuracy and difficulty
+            let analysis;
+            const difficultyLevels = [...new Set(gameState.exerciseSet.map(ex => ex.difficulty))];
+            const hasAdvanced = difficultyLevels.includes('advanced');
+            
+            if (accuracy >= 80) {
+                analysis = hasAdvanced ? 
+                    "Excellent mastery of phrasal verbs in programming! You've successfully handled advanced concepts and show strong understanding of technical English." :
+                    "Great command of phrasal verbs in programming! You demonstrate solid understanding of how these terms are used in technical contexts.";
+            } else if (accuracy >= 60) {
+                analysis = hasAdvanced ? 
+                    "Good progress with programming phrasal verbs. Advanced exercises can be challenging - with more practice, you'll master these complex concepts." :
+                    "Good progress in learning programming phrasal verbs. Continue practicing to improve your technical English skills.";
+            } else if (accuracy >= 40) {
+                analysis = "Solid foundation established. Phrasal verbs in programming context require practice. Focus on understanding the relationship between programming actions and English expressions.";
+            } else {
+                analysis = "Keep practicing! Technical phrasal verbs are challenging but essential for programming communication. Review the explanations and try again to improve your understanding.";
+            }
+            
+            document.getElementById('performanceAnalysis').textContent = analysis;
+        }
+
+        function updateExercisesBreakdown() {
+            const container = document.getElementById('exercisesList');
+            let exercisesHTML = '';
+            
+            gameState.exerciseSet.forEach((exercise, index) => {
+                const wasAnswered = index < gameState.answered;
+                const wasCorrect = wasAnswered && index < gameState.score;
+                const statusIcon = wasCorrect ? '✅' : (wasAnswered ? '❌' : '⏸️');
+                const statusText = wasCorrect ? 'Correct' : (wasAnswered ? 'Incorrect' : 'Not reached');
+                const statusClass = wasCorrect ? 'correct' : (wasAnswered ? 'incorrect' : 'pending');
+                
+                exercisesHTML += `
+                    <div class="exercise-breakdown-item ${statusClass}" style="display: flex; justify-content: space-between; align-items: center; padding: 12px; margin: 8px 0; background: #1e1e1e; border: 1px solid #3e3e42; border-radius: 5px;">
+                        <div>
+                            <strong>${exercise.title}</strong><br>
+                            <small style="color: #858585;">Difficulty: ${exercise.difficulty} | Phrasal Verb: ${exercise.phrasalVerb.split(' = ')[0]}</small>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-size: 18px;">${statusIcon}</div>
+                            <small style="color: #858585;">${statusText}</small>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = exercisesHTML;
+        }
+
+        function updateAchievements(score, answered, learned, accuracy, totalQuestions) {
+            const container = document.getElementById('achievementsList');
+            const achievements = [];
+            
+            // Score-based achievements
+            if (score === totalQuestions) {
+                achievements.push('<div class="achievement-badge gold">Perfect Score</div>');
+            }
+            if (score >= Math.ceil(totalQuestions * 0.8)) {
+                achievements.push('<div class="achievement-badge gold">Excellence Award</div>');
+            }
+            
+            // Accuracy-based achievements
+            if (accuracy >= 90) {
+                achievements.push('<div class="achievement-badge gold">Programming Linguist</div>');
+            } else if (accuracy >= 70) {
+                achievements.push('<div class="achievement-badge silver">Technical English Pro</div>');
+            }
+            
+            // Learning-based achievements
+            if (learned.length >= Math.ceil(totalQuestions * 0.6)) {
+                achievements.push('<div class="achievement-badge silver">Phrasal Verb Expert</div>');
+            } else if (learned.length >= 3) {
+                achievements.push('<div class="achievement-badge bronze">Vocabulary Builder</div>');
+            }
+            
+            // Completion achievements
+            if (answered >= totalQuestions) {
+                achievements.push('<div class="achievement-badge silver">Challenge Completed</div>');
+            }
+            
+            // Difficulty-based achievements
+            const difficultyLevels = [...new Set(gameState.exerciseSet.map(ex => ex.difficulty))];
+            if (difficultyLevels.includes('advanced') && accuracy >= 60) {
+                achievements.push('<div class="achievement-badge gold">Advanced Concepts Master</div>');
+            }
+            
+            // Persistence achievements
+            if (score >= 1) {
+                achievements.push('<div class="achievement-badge bronze">First Success</div>');
+            }
+            if ((answered - score) >= 3 && score >= 2) {
+                achievements.push('<div class="achievement-badge bronze">Persistent Learner</div>');
+            }
+            
+            if (achievements.length > 0) {
+                container.innerHTML = achievements.join('');
+            } else {
+                container.innerHTML = `
+                    <div style="color: #858585; margin-top: 16px; text-align: center;">
+                        Answer exercises correctly to unlock achievements!
+                    </div>
+                `;
+            }
+        }
+
+        function newGame() {
+            // Create new game with random exercise set
+            const newGameState = {
+                score: 0,
+                answered: 0,
+                learned: [],
+                currentExercise: 0,
+                exerciseSet: getRandomExerciseSet(5)
+            };
+            localStorage.setItem('englishIDEGame', JSON.stringify(newGameState));
+            window.location.href = 'index.html';
+        }
+
+        function printCertificate() {
+            window.print();
+        }
+
+        function shareResults() {
+            if (gameState.exerciseSet && gameState.exerciseSet.length > 0) {
+                const totalQuestions = gameState.exerciseSet.length;
+                const accuracy = gameState.answered > 0 ? Math.round((gameState.score/gameState.answered)*100) : 0;
+                
+                const difficultyLevels = [...new Set(gameState.exerciseSet.map(ex => ex.difficulty))];
+                const difficultyText = difficultyLevels.join(', ');
+                
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'IDERRORS - English Programming Game Results',
+                        text: `I just completed the IDERRORS challenge! Score: ${gameState.score}/${totalQuestions} (${accuracy}% accuracy). Difficulties: ${difficultyText}. Phrasal verbs learned: ${gameState.learned.length}`,
+                        url: window.location.href
+                    });
+                } else {
+                    const text = `I just completed the IDERRORS challenge! Score: ${gameState.score}/${totalQuestions} (${accuracy}% accuracy). Phrasal verbs learned: ${gameState.learned.length}. Difficulties covered: ${difficultyText}`;
+                    if (navigator.clipboard) {
+                        navigator.clipboard.writeText(text);
+                        alert('Results copied to clipboard!');
+                    } else {
+                        alert('Share feature not available. Your score: ' + gameState.score + '/' + totalQuestions);
+                    }
+                }
+            }
+        }
+
+        // Initialize when page loads
+        window.onload = loadGameResults;
+    </script>
+    <script src="common.js"></script>
+</body>
+</html>

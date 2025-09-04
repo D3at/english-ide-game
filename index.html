@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Game IDERRORS - Programming Challenge</title>
+    <link rel="stylesheet" href="ide-theme.css">
+</head>
+<body>
+    <!-- Menu Bar -->
+    <div class="menu-bar">
+        <div class="menu-item">File</div>
+        <div class="menu-item">Edit</div>
+        <div class="menu-item">View</div>
+        <div class="menu-item">Run</div>
+        <div class="menu-item">Help</div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <button class="tool-button" onclick="newGame()">🎮 New Game</button>
+        <div class="tool-separator"></div>
+        <button class="tool-button" disabled>💾 Save</button>
+        <button class="tool-button" disabled>📂 Open</button>
+        <div class="tool-separator"></div>
+        <div class="score-info">
+            <span>Score: <span id="currentScore">0</span>/5 | Progress: <span id="currentProgress">0</span>/5</span>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-tabs">
+                <div class="sidebar-tab active">📁 Explorer</div>
+                <div class="sidebar-tab">🔍 Search</div>
+                <div class="sidebar-tab">📚 Outline</div>
+            </div>
+            <div class="sidebar-content">
+                <div class="game-instructions">
+                    <div class="instruction-title">🎮 Programming + English Challenge</div>
+                    <div>Complete the programming exercises by choosing the correct phrasal verb. Watch your code execute when you get it right!</div>
+                </div>
+                
+                <div class="progress-container">
+                    <span style="font-size: 11px; font-weight: bold;">Progress:</span>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressBar" style="width: 0%;"></div>
+                    </div>
+                    <span style="font-size: 11px; color: #4fc1ff;"><span id="progressText">0/5</span></span>
+                </div>
+                
+                <div class="project-tree">
+                    <div class="tree-node selected">
+                        <span style="margin-right: 6px;">📁</span>
+                        EnglishCodingGame
+                    </div>
+                    <div class="tree-node" style="margin-left: 20px;">
+                        <span style="margin-right: 6px;">📁</span>
+                        src/main/java
+                    </div>
+                    <div class="tree-node" style="margin-left: 40px;">
+                        <span style="margin-right: 6px;">📁</span>
+                        com.english.game.exercises
+                    </div>
+                    <div class="tree-node selected" style="margin-left: 60px;">
+                        <span style="margin-right: 6px;">☕</span>
+                        <span id="currentClassName">Exercise.java</span>
+                    </div>
+                    <div class="tree-node" style="margin-left: 20px;">
+                        <span style="margin-right: 6px;">📁</span>
+                        resources
+                    </div>
+                    <div class="tree-node" style="margin-left: 40px;">
+                        <span style="margin-right: 6px;">📄</span>
+                        phrasal-verbs.properties
+                    </div>
+                    <div class="tree-node" style="margin-left: 40px;">
+                        <span style="margin-right: 6px;">📄</span>
+                        vocabulary.txt
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Editor Area -->
+        <div class="editor-area">
+            <div class="editor-tabs">
+                <div class="editor-tab active">
+                    <span style="margin-right: 6px;">☕</span>
+                    <span id="tabClassName">Exercise.java</span>
+                    <span style="margin-left: 8px; cursor: pointer;">✕</span>
+                </div>
+            </div>
+
+            <div class="code-editor">
+                <div class="line-numbers" id="lineNumbers">
+                    1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>
+                </div>
+                <div class="code-content" id="codeContent">
+<span class="keyword">package</span> com.english.game.exercises;
+
+<span class="keyword">import</span> java.util.*;
+
+<span class="comment">/**
+ * Exercise: Loading Exercise...
+ * Learn: Phrasal Verb
+ */</span>
+<span class="keyword">public class</span> <span class="class-name">Exercise</span> {
+    
+    <span class="keyword">public static void</span> <span class="method">main</span>(String[] args) {
+        <span class="comment">// Fix the phrasal verb to complete this programming exercise</span>
+        
+        <span class="comment">// Loading exercise...</span>
+    }
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- Challenge Panel -->
+        <div class="challenge-panel">
+            <div class="challenge-header">
+                <span>🎯</span>
+                Programming Challenge #<span id="questionNumber">1</span> of 5
+            </div>
+            
+            <div class="challenge-content">
+                <div class="exercise-description" id="exerciseDescription">
+                    <strong>Loading Exercise...</strong><br><br>
+                    <strong>📚 Context:</strong><br>
+                    Please wait while the exercise loads...<br><br>
+                    <strong>🎯 Goal:</strong><br>
+                    Complete the code with the correct phrasal verb so that it compiles successfully.
+                </div>
+                
+                <div class="phrasal-explanation">
+                    <strong>💡 Hint about the phrasal verb:</strong><br>
+                    Think about which phrasal verb would best fit in this programming context.
+                    The meaning should make sense with the action being performed in the code.
+                </div>
+
+                <div id="errorMessage" style="font-weight: bold; color: #f48771; font-size: 13px; background: rgba(244, 135, 113, 0.1); padding: 8px; border-radius: 4px;">
+                    ❌ Error: Loading...
+                </div>
+
+                <form id="answerForm" class="options-container">
+                    <div style="font-weight: bold; margin-bottom: 8px; font-size: 13px; color: #4fc1ff;">
+                        Choose the correct completion:
+                    </div>
+                    
+                    <div id="optionsContainer">
+                        <!-- Options will be loaded here -->
+                    </div>
+                    
+                    <input type="hidden" id="selectedAnswer" value="">
+                    
+                    <button type="button" class="submit-button" id="compileBtn" onclick="submitAnswer()" disabled>
+                        ▶️ Compile & Execute Code
+                    </button>
+                    
+                    <div style="margin-top: 12px; font-size: 11px; color: #858585; text-align: center;">
+                        Select an option and click compile.
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Status Bar -->
+    <div class="status-bar">
+        <span id="statusMessage">Java | Ready | Exercise: Loading...</span>
+        <span>Ln 1, Col 1</span>
+    </div>
+
+    <!-- Load questions database -->
+    <script src="questions.js"></script>
+    
+    <script>
+        // Game State
+        let gameState = {
+            score: 0,
+            answered: 0,
+            learned: [],
+            currentExercise: 0,
+            exerciseSet: []  // Will hold the current game's exercise set
+        };
+
+        // Initialize game
+        function initializeGame() {
+            // Load from localStorage if exists
+            const savedGame = localStorage.getItem('englishIDEGame');
+            if (savedGame) {
+                gameState = JSON.parse(savedGame);
+            }
+            
+            // Initialize exercise set if not exists
+            if (!gameState.exerciseSet || gameState.exerciseSet.length === 0) {
+                // Use first 5 exercises or get random set
+                gameState.exerciseSet = GAME_EXERCISES.slice(0, Math.min(5, GAME_EXERCISES.length));
+                localStorage.setItem('englishIDEGame', JSON.stringify(gameState));
+            }
+            
+            // Check if game is completed
+            if (gameState.answered >= gameState.exerciseSet.length) {
+                window.location.href = 'result.html';
+                return;
+            }
+            
+            loadCurrentExercise();
+            updateUI();
+        }
+
+        function loadCurrentExercise() {
+            const exercise = gameState.exerciseSet[gameState.currentExercise];
+            
+            // Update class names
+            const className = exercise.title.replace(/\s+/g, '');
+            document.getElementById('currentClassName').textContent = className + '.java';
+            document.getElementById('tabClassName').textContent = className + '.java';
+            
+            // Update code content
+            const codeContent = `<span class="keyword">package</span> com.english.game.exercises;
+
+<span class="keyword">import</span> java.util.*;
+
+<span class="comment">/**
+ * Exercise: ${exercise.title}
+ * Learn: ${exercise.phrasalVerb}
+ */</span>
+<span class="keyword">public class</span> <span class="class-name">${className}</span> {
+    
+    <span class="keyword">public static void</span> <span class="method">main</span>(String[] args) {
+        <span class="comment">// Fix the phrasal verb to complete this programming exercise</span>
+        
+        ${exercise.code.replace('______', '<span class="error">______</span>')}
+    }
+}`;
+            
+            document.getElementById('codeContent').innerHTML = codeContent;
+            
+            // Update line numbers
+            const lines = codeContent.split('\n').length + 6;
+            let lineNumbers = '';
+            for (let i = 1; i <= lines; i++) {
+                lineNumbers += i + '<br>';
+            }
+            document.getElementById('lineNumbers').innerHTML = lineNumbers;
+            
+            // Update exercise description
+            document.getElementById('exerciseDescription').innerHTML = `
+                <strong>${exercise.title}</strong><br><br>
+                <strong>📚 Context:</strong><br>
+                ${exercise.explanation}<br><br>
+                <strong>🎯 Goal:</strong><br>
+                Complete the code with the correct word so that it compiles and runs successfully.
+            `;
+            
+            // Update error message
+            document.getElementById('errorMessage').innerHTML = `❌ Error: ${exercise.error}`;
+            
+            // Update options
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+            
+            exercise.options.forEach((option, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option-item';
+                optionDiv.onclick = () => selectOption(index);
+                optionDiv.innerHTML = `${String.fromCharCode(65 + index)}. ${option}`;
+                optionsContainer.appendChild(optionDiv);
+            });
+            
+            // Update question number
+            document.getElementById('questionNumber').textContent = gameState.currentExercise + 1;
+            
+            // Update status
+            document.getElementById('statusMessage').textContent = `Java | Ready | Exercise: ${exercise.title}`;
+        }
+
+        function updateUI() {
+            const maxQuestions = gameState.exerciseSet.length || 5;
+            document.getElementById('currentScore').textContent = gameState.score;
+            document.getElementById('currentProgress').textContent = gameState.answered;
+            document.getElementById('progressText').textContent = `${gameState.answered}/${maxQuestions}`;
+            document.getElementById('progressBar').style.width = `${(gameState.answered / maxQuestions * 100)}%`;
+        }
+
+        function selectOption(index) {
+            // Remove previous selection
+            const options = document.querySelectorAll('.option-item');
+            options.forEach(option => option.classList.remove('selected'));
+            
+            // Select current option
+            options[index].classList.add('selected');
+            document.getElementById('selectedAnswer').value = index;
+            document.getElementById('compileBtn').disabled = false;
+        }
+
+        function submitAnswer() {
+            const selectedAnswer = document.getElementById('selectedAnswer').value;
+            if (selectedAnswer === '') return;
+            
+            // Store answer and redirect to validation
+            sessionStorage.setItem('userAnswer', selectedAnswer);
+            sessionStorage.setItem('gameState', JSON.stringify(gameState));
+            window.location.href = 'validate.html';
+        }
+
+        function newGame() {
+            // Create new game with random exercise set
+            gameState = {
+                score: 0,
+                answered: 0,
+                learned: [],
+                currentExercise: 0,
+                exerciseSet: getRandomExerciseSet(5) // Get 5 random exercises
+            };
+            localStorage.setItem('englishIDEGame', JSON.stringify(gameState));
+            location.reload();
+        }
+
+        // Initialize when page loads
+        window.onload = initializeGame;
+    </script>
+    <script src="common.js"></script>
+</body>
+</html>

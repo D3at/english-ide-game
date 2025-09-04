@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Game IDERRORS - Validation Results</title>
+    <link rel="stylesheet" href="ide-theme.css">
+</head>
+<body>
+    <!-- Menu Bar -->
+    <div class="menu-bar">
+        <div class="menu-item">File</div>
+        <div class="menu-item">Edit</div>
+        <div class="menu-item">View</div>
+        <div class="menu-item">Run</div>
+        <div class="menu-item">Help</div>
+    </div>
+
+    <!-- Minimal Toolbar -->
+    <div class="toolbar">
+        <div class="tool-button" style="background: #555; cursor: not-allowed;" disabled>🎮 Game Mode</div>
+        <div class="tool-separator"></div>
+        <div class="score-info">
+            <span>Score: <span id="currentScore">0</span>/5 | Progress: <span id="currentProgress">0</span>/5</span>
+        </div>
+    </div>
+
+    <!-- Centered Container -->
+    <div class="centered-container" style="min-height: 100vh; overflow-y: auto; padding: 40px 20px;">
+        <div class="result-container" id="resultContainer" style="max-width: 600px; width: 100%; margin: 0 auto; position: relative;">
+            <div class="result-header" id="resultHeader">
+                <div class="result-icon" id="resultIcon">
+                    ⏳
+                </div>
+                <div class="result-title" id="resultTitle" style="color: #4fc1ff;">
+                    Processing Answer...
+                </div>
+                <div class="result-subtitle" id="resultSubtitle">
+                    Validating your code...
+                </div>
+            </div>
+
+            <div class="feedback-section">
+                <div class="feedback-text" id="feedbackText">
+                    Please wait while we validate your answer...
+                </div>
+
+                <div id="phrasalHighlight" class="phrasal-highlight" style="display: none;">
+                    <!-- Content will be inserted here -->
+                </div>
+
+                <div id="errorHighlight" class="error-highlight" style="display: none;">
+                    <!-- Content will be inserted here -->
+                </div>
+
+                <div id="codePreview" style="display: none;">
+                    <div style="margin-top: 12px; font-weight: bold; color: #4fc1ff;">
+                        💡 View of the Corrected Code:
+                    </div>
+                    <div class="code-preview" id="codePreviewContent">
+                        <!-- Code will be inserted here -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-section">
+                <div class="stat-item">
+                    <div class="stat-number" id="statCorrect">0</div>
+                    <div class="stat-label">Correct Answers</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="statIncorrect">0</div>
+                    <div class="stat-label">Incorrect Answers</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="statLearned">0</div>
+                    <div class="stat-label">Phrasal Verbs</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="statAccuracy">0%</div>
+                    <div class="stat-label">Accuracy</div>
+                </div>
+            </div>
+
+            <div class="action-buttons" id="actionButtons">
+                <button class="action-button primary" id="nextButton" style="display: none;" onclick="nextAction()">
+                    ➡️ Next Question
+                </button>
+                <button class="action-button primary" id="resultsButton" style="display: none;" onclick="showResults()">
+                    🏆 See Final Results
+                </button>
+                <button class="action-button secondary" onclick="newGame()">
+                    🔄 Play Again
+                </button>
+            </div>
+
+            <!-- Progress Info -->
+            <div id="progressInfo" style="margin-top: 20px; padding-top: 16px; border-top: 1px solid #3e3e42; text-align: center; font-size: 12px; color: #858585;">
+                Processing answer...
+            </div>
+
+            <!-- Navigation Instructions -->
+            <div style="margin-top: 16px; text-align: center; font-size: 11px; color: #858585; background: rgba(79, 193, 255, 0.1); padding: 8px; border-radius: 4px;">
+                <strong>Navigation:</strong> Press Enter to continue | Press Escape to restart
+            </div>
+        </div>
+    </div>
+
+    <!-- Status Bar -->
+    <div class="status-bar" id="statusBar">
+        <span id="statusMessage">Java | Processing | Exercise: Validating...</span>
+        <span>Processing Answer</span>
+    </div>
+
+    <!-- Load questions database -->
+    <script src="questions.js"></script>
+    
+    <script>
+        let gameState = {};
+        let currentExercise = {};
+        let userAnswer = -1;
+        let isCorrect = false;
+
+        function initializeValidation() {
+            // Get user answer and game state from sessionStorage
+            userAnswer = parseInt(sessionStorage.getItem('userAnswer') || '-1');
+            gameState = JSON.parse(sessionStorage.getItem('gameState') || '{}');
+            
+            if (userAnswer === -1 || !gameState.hasOwnProperty('currentExercise') || !gameState.exerciseSet) {
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            // Get current exercise from the game's exercise set
+            currentExercise = gameState.exerciseSet[gameState.currentExercise];
+            
+            // Validate answer after a short delay for effect
+            setTimeout(() => {
+                validateAnswer();
+            }, 1500);
+        }
+
+        function validateAnswer() {
+            isCorrect = (userAnswer === currentExercise.correct);
+            
+            // Always increment answered count
+            gameState.answered++;
+            
+            let feedbackMessage;
+            let phrasalLearned = "";
+            
+            if (isCorrect) {
+                gameState.score++;
+                
+                // Add phrasal verb to learned list
+                const phrasalToAdd = currentExercise.title + ": " + currentExercise.phrasalVerb;
+                const alreadyLearned = gameState.learned.some(l => 
+                    l.includes(currentExercise.phrasalVerb.split(" = ")[0])
+                );
+                
+                if (!alreadyLearned) {
+                    gameState.learned.push(phrasalToAdd);
+                    phrasalLearned = currentExercise.phrasalVerb;
+                }
+                
+                feedbackMessage = `Excellent! You compiled and executed the code correctly. The word '${currentExercise.options[currentExercise.correct]}' was the right choice. It corresponds to the phrasal verb '${currentExercise.phrasalVerb.split(" = ")[0]}' in programming context.`;
+            } else {
+                const correctOption = currentExercise.options[currentExercise.correct];
+                feedbackMessage = `The compilation failed. The correct answer was '${correctOption}' which relates to the phrasal verb: ${currentExercise.phrasalVerb}. Study this concept for future reference.`;
+            }
+            
+            // Advance to next exercise if not at the end
+            if (gameState.currentExercise < gameState.exerciseSet.length - 1) {
+                gameState.currentExercise++;
+            }
+            
+            // Save updated game state
+            localStorage.setItem('englishIDEGame', JSON.stringify(gameState));
+            
+            // Update UI
+            updateValidationUI(feedbackMessage, phrasalLearned);
+            
+            // Clear session storage
+            sessionStorage.removeItem('userAnswer');
+            sessionStorage.removeItem('gameState');
+        }
+
+        function updateValidationUI(feedbackMessage, phrasalLearned) {
+            const resultContainer = document.getElementById('resultContainer');
+            const resultHeader = document.getElementById('resultHeader');
+            const resultIcon = document.getElementById('resultIcon');
+            const resultTitle = document.getElementById('resultTitle');
+            const resultSubtitle = document.getElementById('resultSubtitle');
+            const feedbackText = document.getElementById('feedbackText');
+            const statusBar = document.getElementById('statusBar');
+            const statusMessage = document.getElementById('statusMessage');
+            
+            // Set result attributes
+            resultContainer.setAttribute('data-result', isCorrect ? 'success' : 'error');
+            resultHeader.setAttribute('data-result', isCorrect ? 'success' : 'error');
+            
+            // Update header
+            resultIcon.textContent = isCorrect ? '🎉' : '❌';
+            resultTitle.textContent = isCorrect ? 'Code Compiled Successfully!' : 'Compilation Error';
+            resultTitle.style.color = isCorrect ? '#4fc1ff' : '#f48771';
+            resultSubtitle.textContent = `Exercise: ${currentExercise.title} | Question ${gameState.answered}/${gameState.exerciseSet.length}`;
+            
+            // Update feedback
+            feedbackText.textContent = feedbackMessage;
+            
+            // Show appropriate highlight
+            if (isCorrect && phrasalLearned) {
+                const phrasalHighlight = document.getElementById('phrasalHighlight');
+                const parts = phrasalLearned.split(" = ");
+                phrasalHighlight.innerHTML = `
+                    <strong>📚 New Phrasal Verb Mastered:</strong><br>
+                    <strong>${parts[0]}</strong> = ${parts[1]}<br><br>
+                    <strong>Example in Programming:</strong><br>
+                    "${currentExercise.explanation}"<br><br>
+                    <strong>Difficulty Level:</strong> ${currentExercise.difficulty}
+                `;
+                phrasalHighlight.style.display = 'block';
+                
+                // Show corrected code
+                const codePreview = document.getElementById('codePreview');
+                const codePreviewContent = document.getElementById('codePreviewContent');
+                codePreviewContent.innerHTML = `<span class="keyword">// Fixed Code:</span>\n${currentExercise.code.replace('______', `<span class="success-highlight">${currentExercise.options[currentExercise.correct]}</span>`)}`;
+                codePreview.style.display = 'block';
+                
+            } else if (!isCorrect) {
+                const errorHighlight = document.getElementById('errorHighlight');
+                const parts = currentExercise.phrasalVerb.split(" = ");
+                const correctOption = currentExercise.options[currentExercise.correct];
+                const userOption = currentExercise.options[userAnswer];
+                
+                errorHighlight.innerHTML = `
+                    <strong>📖 Learn this phrasal verb:</strong><br>
+                    <strong>${parts[0]}</strong> = ${parts[1]}<br><br>
+                    <strong>Your answer:</strong> ${userOption}<br>
+                    <strong>Correct answer:</strong> ${correctOption}<br><br>
+                    <strong>Programming Context:</strong><br>
+                    "${currentExercise.explanation}"<br><br>
+                    <strong>Difficulty:</strong> ${currentExercise.difficulty}<br>
+                    <em>💡 Tip: Focus on understanding the meaning relationship between the phrasal verb and the programming action.</em>
+                `;
+                errorHighlight.style.display = 'block';
+            }
+            
+            // Update stats
+            updateStats();
+            
+            // Update action buttons
+            const gameOver = gameState.answered >= gameState.exerciseSet.length;
+            if (gameOver) {
+                document.getElementById('resultsButton').style.display = 'inline-block';
+                document.getElementById('nextButton').style.display = 'none';
+            } else {
+                document.getElementById('nextButton').style.display = 'inline-block';
+                document.getElementById('nextButton').textContent = `➡️ Next Question (${gameState.answered}/${gameState.exerciseSet.length})`;
+                document.getElementById('resultsButton').style.display = 'none';
+            }
+            
+            // Update progress info
+            const progressInfo = document.getElementById('progressInfo');
+            if (!gameOver) {
+                progressInfo.innerHTML = `Progress: ${gameState.answered}/${gameState.exerciseSet.length} answered questions | ${gameState.exerciseSet.length - gameState.answered} remaining questions`;
+            } else {
+                progressInfo.innerHTML = `Game Complete! You have learned ${gameState.learned.length} phrasal verbs in a programming context.`;
+            }
+            
+            // Update status bar
+            statusBar.className = `status-bar ${isCorrect ? 'success' : 'error'}`;
+            statusMessage.textContent = `Java | ${isCorrect ? 'Compilation Successful' : 'Compilation Failed'} | Exercise: ${currentExercise.title}`;
+        }
+
+        function updateStats() {
+            const maxQuestions = gameState.exerciseSet.length || 5;
+            const incorrect = gameState.answered - gameState.score;
+            const accuracy = gameState.answered > 0 ? Math.round((gameState.score / gameState.answered) * 100) : 0;
+            
+            document.getElementById('statCorrect').textContent = gameState.score;
+            document.getElementById('statIncorrect').textContent = incorrect;
+            document.getElementById('statLearned').textContent = gameState.learned.length;
+            document.getElementById('statAccuracy').textContent = accuracy + '%';
+            
+            document.getElementById('currentScore').textContent = gameState.score;
+            document.getElementById('currentProgress').textContent = gameState.answered;
+        }
+
+        function nextAction() {
+            window.location.href = 'index.html';
+        }
+
+        function showResults() {
+            window.location.href = 'result.html';
+        }
+
+        function newGame() {
+            // Create new game with random exercise set
+            const newGameState = {
+                score: 0,
+                answered: 0,
+                learned: [],
+                currentExercise: 0,
+                exerciseSet: getRandomExerciseSet(5)
+            };
+            localStorage.setItem('englishIDEGame', JSON.stringify(newGameState));
+            window.location.href = 'index.html';
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                if (gameState.answered >= gameState.exerciseSet.length) {
+                    showResults();
+                } else {
+                    nextAction();
+                }
+            } else if (event.key === 'Escape') {
+                newGame();
+            }
+        });
+
+        // Initialize when page loads
+        window.onload = initializeValidation;
+    </script>
+
+    <!-- Include common JavaScript functions -->
+    <script src="common.js"></script>
+</body>
+</html>
