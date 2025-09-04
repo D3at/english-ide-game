@@ -439,7 +439,7 @@ function restartGame() {
         currentExercise: 0
     };
     localStorage.setItem('englishIDEGame', JSON.stringify(newGameState));
-    window.location.href = 'welcome.html';
+    window.location.href = 'index.html';
 }
 
 // === FUNCIONES DEL MENU BAR ===
@@ -671,4 +671,5 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
         document.head.appendChild(notificationStyles);
     }
+
 });
